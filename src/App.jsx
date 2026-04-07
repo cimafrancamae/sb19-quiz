@@ -41,7 +41,6 @@ const SONG_POOL = {
     { title:"Wag Mong Ikunot Ang Iyong Noo", emojis:"😠🤚😮‍💨💆", hint:"Get In The Zone album (2020) · Longest song title in their discography · The title is a literal physical instruction about a facial expression", meaning:"A lighthearted feel-good track. The title literally means 'Don't furrow your brow' — a playful Filipino reminder to stop worrying and enjoy the moment.", yt:"C9jkWKNEGX8", stream:"https://lnk.to/SB19-GetInTheZone" },
     { title:"Hanggang Sa Huli", emojis:"💞🕰️🔚", hint:"Get In The Zone album (2020) · Title track · Animated MV written and directed by Justin", meaning:"A deeply romantic ballad pledging love and loyalty until the final moment. The animated MV was conceived and directed by Justin.", yt:"C9jkWKNEGX8", stream:"https://lnk.to/SB19-HangangSaHuli" },
     { title:"Alab", emojis:"🔥❤️‍🔥✨", hint:"Single (2019) · First release after signing with Sony Music PH · Won MV of the Year at Myx Music Awards 2021", meaning:"Their first Sony Music single — a fiery dance-pop love song about burning desire. The MV won Music Video of the Year at the 2021 Myx Music Awards.", yt:"JrPmDxJs5VY", stream:"https://lnk.to/SB19-Alab" },
-    { title:"Love Goes", emojis:"💘🛤️🌅", hint:"Get In The Zone album (2020) · Also released as an EDM remix · Early vocal showcase", meaning:"A bittersweet track about a love slowly fading. Released in both original and EDM versions on their debut album.", yt:"C9jkWKNEGX8", stream:"https://lnk.to/SB19-GetInTheZone" },
     { title:"No Stopping You", emojis:"🏃‍♂️💨🎬🔥", hint:"OST (2021) · Written for a Filipino streaming film · Remixed with a female OPM artist named after a day of the week", meaning:"Written for the Filipino film Love at First Stream — a high-octane anthem about unstoppable momentum. The remix with Jayda Avanzado extended its reach significantly.", yt:"ffh0ojPU27k", stream:"https://lnk.to/SB19-NoStoppingYou" },
   ],
   3: [
@@ -311,11 +310,18 @@ function QuestionScreen({ color, glow, totalQ, qIdx, song, onAnswer, label }) {
                 padding:"12px 14px",borderRadius:8,fontFamily:"'Courier New',monospace",fontSize:"0.95rem",outline:"none"}} autoFocus />
             <NeonBtn onClick={check} color={color} disabled={!input.trim()}>GO</NeonBtn>
           </div>
-          {!showHint && <button onClick={()=>setShowHint(true)}
-            style={{background:"none",border:"none",color:"#555",fontFamily:"'Courier New',monospace",
-              fontSize:"0.75rem",cursor:"pointer",textDecoration:"underline",textAlign:"left"}}>
-            Need a hint? (no spoilers — includes release info)
-          </button>}
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+            {!showHint && <button onClick={()=>setShowHint(true)}
+              style={{background:"none",border:"none",color:"#555",fontFamily:"'Courier New',monospace",
+                fontSize:"0.75rem",cursor:"pointer",textDecoration:"underline",textAlign:"left"}}>
+              Need a hint? (no spoilers — includes release info)
+            </button>}
+            <button onClick={()=>setRevealed(false)}
+              style={{background:"none",border:"none",color:"#444",fontFamily:"'Courier New',monospace",
+                fontSize:"0.75rem",cursor:"pointer",textDecoration:"underline",marginLeft:"auto"}}>
+              Skip →
+            </button>
+          </div>
         </>
       ) : (
         <Card style={{textAlign:"center"}} glow={revealed?`0 0 18px ${NEON.cyan}66`:`0 0 18px ${NEON.pink}66`}>
@@ -394,10 +400,10 @@ function EndScreen({ totalScore, onReplay, onSoloMode, onFeedback }) {
       <Card style={{maxWidth:380,width:"100%",marginBottom:12,textAlign:"left"}} glow={`0 0 16px ${NEON.pink}55`}>
         <p style={{color:NEON.pink,fontFamily:"'Courier New',monospace",fontWeight:700,marginBottom:12,textAlign:"center"}}>💜 Follow & share!</p>
         {[
-          {icon:"🐦",label:"Twitter / X",handle:"@itsmaeci",url:"https://twitter.com"},
-          {icon:"📸",label:"Instagram",handle:"@itsmaeci",url:"https://instagram.com"},
-          {icon:"🎵",label:"TikTok",handle:"@itsmaeci",url:"https://tiktok.com"},
-          {icon:"ⓕ",label:"Facebook",handle:"@itsmaeci",url:"https://facebook.com"},
+          {icon:"🐦",label:"Twitter / X",handle:"@itsmaeci",url:"https://twitter.com/itsmaeci"},
+          {icon:"📸",label:"Instagram",handle:"@itsmaeci",url:"https://instagram.com/itsmaeci"},
+          {icon:"🎵",label:"TikTok",handle:"@itsmaeci",url:"https://tiktok.com/@itsmaeci"},
+          {icon:"ⓕ",label:"Facebook",handle:"@itsmaeci",url:"https://facebook.com/itsmaeci"},
         ].map(s=>(
           <a key={s.label} href={s.url} target="_blank" rel="noreferrer"
             style={{display:"flex",alignItems:"center",gap:10,padding:"7px 10px",borderRadius:8,
@@ -478,6 +484,7 @@ export default function App() {
   const [member, setMember] = useState(null);
   const [soloQ, setSoloQ] = useState(0);
   const [soloScore, setSoloScore] = useState(0);
+  const [soloSongs, setSoloSongs] = useState([]);
   const [showFeedback, setShowFeedback] = useState(false);
   // Shuffled songs for this game session
   const [sessionSongs, setSessionSongs] = useState({1:[], 2:[], 3:[]});
@@ -593,13 +600,13 @@ export default function App() {
       )}
 
       {screen==="soloLobby" && (
-        <SoloLobby onSelect={m=>{setMember(m);setSoloQ(0);setSoloScore(0);setScreen("soloQuiz");}}
+        <SoloLobby onSelect={m=>{setMember(m);setSoloQ(0);setSoloScore(0);setSoloSongs(shuffle([...m.songs]));setScreen("soloQuiz");}}
           onBack={()=>setScreen("intro")} />
       )}
 
-      {screen==="soloQuiz" && member && (
+      {screen==="soloQuiz" && member && soloSongs.length>0 && (
         <QuestionScreen key={soloQ} color={member.color} glow={`0 0 22px ${member.color}88`}
-          totalQ={member.songs.length} qIdx={soloQ} song={member.songs[soloQ]}
+          totalQ={member.songs.length} qIdx={soloQ} song={soloSongs[soloQ]}
           onAnswer={handleSoloAnswer} label={`${member.emoji} ${member.name} Solo`} />
       )}
 
@@ -609,7 +616,7 @@ export default function App() {
           passMsg={`${soloScore===member.songs.length?"💯 Perfect!":"Nice!"} You really know ${member.name}'s solo work!`}
           failMsg={`Time to stream ${member.name}'s solo stuff! 🎵`}
           buttons={<>
-            <NeonBtn onClick={()=>{setSoloQ(0);setSoloScore(0);setScreen("soloQuiz");}} color={member.color}>↩ Retry</NeonBtn>
+            <NeonBtn onClick={()=>{setSoloQ(0);setSoloScore(0);setSoloSongs(shuffle([...member.songs]));setScreen("soloQuiz");}} color={member.color}>↩ Retry</NeonBtn>
             <NeonBtn onClick={()=>setScreen("soloLobby")} color="#aaa">← Members</NeonBtn>
             <NeonBtn onClick={()=>setShowFeedback(true)} color={NEON.purple}>💬 Feedback</NeonBtn>
           </>}
