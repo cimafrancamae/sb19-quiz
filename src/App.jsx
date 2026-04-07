@@ -394,10 +394,10 @@ function EndScreen({ totalScore, onReplay, onSoloMode, onFeedback }) {
       <Card style={{maxWidth:380,width:"100%",marginBottom:12,textAlign:"left"}} glow={`0 0 16px ${NEON.pink}55`}>
         <p style={{color:NEON.pink,fontFamily:"'Courier New',monospace",fontWeight:700,marginBottom:12,textAlign:"center"}}>💜 Follow & share!</p>
         {[
-          {icon:"🐦",label:"Twitter / X",handle:"@YourHandle",url:"https://twitter.com"},
-          {icon:"📸",label:"Instagram",handle:"@YourHandle",url:"https://instagram.com"},
-          {icon:"🎵",label:"TikTok",handle:"@YourHandle",url:"https://tiktok.com"},
-          {icon:"▶️",label:"YouTube",handle:"Your Channel",url:"https://youtube.com"},
+          {icon:"🐦",label:"Twitter / X",handle:"@itsmaeci",url:"https://twitter.com"},
+          {icon:"📸",label:"Instagram",handle:"@itsmaeci",url:"https://instagram.com"},
+          {icon:"🎵",label:"TikTok",handle:"@itsmaeci",url:"https://tiktok.com"},
+          {icon:"ⓕ",label:"Facebook",handle:"@itsmaeci",url:"https://facebook.com"},
         ].map(s=>(
           <a key={s.label} href={s.url} target="_blank" rel="noreferrer"
             style={{display:"flex",alignItems:"center",gap:10,padding:"7px 10px",borderRadius:8,
