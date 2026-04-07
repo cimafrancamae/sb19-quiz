@@ -157,6 +157,20 @@ function Particles() {
   </div>;
 }
 
+// ── SHARE BUTTON ─────────────────────────────────────────────────────────────
+function ShareBtn({ text, color=NEON.cyan, style={} }) {
+  const handle = async () => {
+    const url = window.location.href;
+    const body = `${text}\n${url}`;
+    if (navigator.share) {
+      try { await navigator.share({ text: body }); } catch {}
+    } else {
+      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(body)}`, "_blank", "noopener,noreferrer");
+    }
+  };
+  return <NeonBtn onClick={handle} color={color} style={style}>📤 Share Result</NeonBtn>;
+}
+
 // ── STREAM LINKS ─────────────────────────────────────────────────────────────
 const PLACEHOLDER_YT = ["EmojiMV2026","VISAmv2026","UmaaligidMV"];
 function StreamLinks({ song, color }) {
@@ -400,6 +414,7 @@ function EndScreen({ totalScore, onReplay, onSoloMode, onFeedback }) {
         <p style={{color:"#aaa",fontFamily:"'Courier New',monospace"}}>{totalScore}/30 correct</p>
         <p style={{color:NEON.gold,fontFamily:"'Courier New',monospace",marginTop:4}}>{rank}</p>
       </div>
+      <ShareBtn text={`I scored ${pct}% on the SB19 Emoji Quiz! ${rank} 🎵`} color={NEON.cyan} style={{marginBottom:16}} />
       <Card style={{maxWidth:380,width:"100%",marginBottom:12}} glow={`0 0 16px ${NEON.purple}55`}>
         <p style={{color:NEON.purple,fontFamily:"'Courier New',monospace",fontWeight:700,marginBottom:8}}>🎤 Try Solo Mode!</p>
         <p style={{color:"#aaa",fontFamily:"'Courier New',monospace",fontSize:"0.78rem",marginBottom:12}}>
@@ -631,6 +646,7 @@ export default function App() {
           buttons={<>
             <NeonBtn onClick={()=>{setSoloQ(0);setSoloScore(0);setSoloSongs(shuffle([...member.songs]));setScreen("soloQuiz");}} color={member.color}>↩ Retry</NeonBtn>
             <NeonBtn onClick={()=>setScreen("soloLobby")} color="#aaa">← Members</NeonBtn>
+            <ShareBtn text={`I scored ${Math.round((soloScore/member.songs.length)*100)}% on ${member.name}'s solo quiz on the SB19 Emoji Quiz! 💜`} color={member.color} />
             <NeonBtn onClick={()=>setShowFeedback(true)} color={NEON.purple}>💬 Feedback</NeonBtn>
           </>}
         />
