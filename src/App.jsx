@@ -519,7 +519,6 @@ export default function App() {
   };
 
   const currentSong = sessionSongs[lvlIdx+1]?.[qIdx];
-  const pct = lvlScore && Math.round((lvlScore/10)*100);
 
   return (
     <div style={{background:`radial-gradient(ellipse at 20% 20%, #1a003a 0%, ${NEON.darker} 60%)`,minHeight:"100vh",color:NEON.white}}>
