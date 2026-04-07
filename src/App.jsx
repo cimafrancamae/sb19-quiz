@@ -9,7 +9,7 @@ const NEON = {
 // ── SONG POOL — more songs than needed so each play feels fresh ───────────────
 // Level 1: 13 songs, picks 10 randomly each game
 // Level 2: 18 songs, picks 10 randomly each game
-// Level 3: 13 songs, picks 10 randomly each game
+// Level 3: 14 songs, picks 10 randomly each game
 // Solo pools: all songs always shown (small sets)
 
 const SONG_POOL = {
@@ -62,6 +62,7 @@ const SONG_POOL = {
     { title:"Toyfriend", emojis:"🤝🎵🌸😊", hint:"Wakas at Simula album (2026) · Collab with a Japanese boy group · Described as 'cool, easy, and warm' · Debuted live at a showcase in Yokohama before official release", meaning:"SB19's first official collab with a Japanese group — BE:FIRST. A feel-good pop track described as 'cool, easy, and warm,' performed live at DUNK Showcase in K-Arena Yokohama.", yt:"", stream:"" },
     { title:"Everblack", emojis:"🌑🎸🔮⚡", hint:"Wakas at Simula album (2026) · One of the more experimental tracks on the album · Described as 'sonically daring' · Pushes into darker sonic territory", meaning:"One of the more experimental tracks from SB19's second studio album — 'sonically daring' and refreshingly dark, pushing into heavier, more complex territory.", yt:"", stream:"" },
     { title:"Wakas", emojis:"🔚🌸😢💙", hint:"Wakas at Simula album (2026) · Title means 'end' in Filipino · An emotional ballad that serves as the thematic conclusion of SB19's EP trilogy era", meaning:"An emotional ballad whose title 'Wakas' (end/finish) marks both the literal and thematic conclusion of SB19's EP trilogy era. Showcases the group's extraordinary vocal abilities and heartfelt delivery.", yt:"", stream:"" },
+    { title:"Kapangyarihan", emojis:"✊🇵🇭⚖️🔥", hint:"Collab with a beloved Filipino indie folk duo (2021) · Co-written by Pablo · Initially released to call for justice after a high-profile police killing · Became a protest anthem at major Philippine rallies in 2025", meaning:"A folk-rock and hip-hop protest anthem co-written by Pablo and Ben&Ben's Miguel and Paolo Guico. Originally released in 2020 calling for justice for Sonya and Frank Gregorio, it became the battle cry at the 'Trillion Peso March' (2025) and was used as the opening theme for the Philippine war film 'Pulang Araw' (2024). 'Kapangyarihan' means 'power.'", yt:"yaGmwtpOyV0", stream:"" },
   ],
 };
 
@@ -344,7 +345,7 @@ function QuestionScreen({ color, glow, totalQ, qIdx, song, onAnswer, label }) {
             {!showHint && <button onClick={()=>setShowHint(true)}
               style={{background:"none",border:"none",color:"#555",fontFamily:"'Courier New',monospace",
                 fontSize:"0.75rem",cursor:"pointer",textDecoration:"underline",textAlign:"left"}}>
-              Need a hint? (no spoilers — includes release info)
+              Need a hint?
             </button>}
             <button onClick={()=>setRevealed(false)}
               style={{background:"none",border:"none",color:"#444",fontFamily:"'Courier New',monospace",
