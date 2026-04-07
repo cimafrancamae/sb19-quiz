@@ -281,9 +281,11 @@ function QuestionScreen({ color, glow, totalQ, qIdx, song, onAnswer, label }) {
   const check = () => {
     if (!input.trim()) return;
     const u = norm(input), c = norm(song.title);
-    const ok = u===c || c.includes(u) || u.includes(c) ||
-      u.split(" ").filter(w=>c.includes(w)&&w.length>2).length >= Math.ceil(c.split(" ").length*0.6);
-    setRevealed(ok);
+    if (u === c) { setRevealed(true); return; }
+    const keyWords = c.split(" ").filter(w => w.length >= 5);
+    if (keyWords.length === 0) { setRevealed(false); return; }
+    const inputSet = new Set(u.split(" "));
+    setRevealed(keyWords.every(w => inputSet.has(w)));
   };
 
   return (
