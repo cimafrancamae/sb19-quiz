@@ -1,0 +1,8 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #060009; color: #fff; font-family: 'Courier New', monospace; }
+button { font-family: inherit; }
+input, textarea { font-family: inherit; }
+a { color: inherit; }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0a0012; }
+::-webkit-scrollbar-thumb { background: #BF00FF44; border-radius: 3px; }
