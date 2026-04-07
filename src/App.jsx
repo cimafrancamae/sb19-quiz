@@ -298,7 +298,7 @@ function QuestionScreen({ color, glow, totalQ, qIdx, song, onAnswer, label }) {
       </div>
       <Card glow={glow} style={{textAlign:"center",marginBottom:16}}>
         <p style={{color:"#aaa",fontFamily:"'Courier New',monospace",fontSize:"0.78rem",marginBottom:8}}>🎵 What SB19 song is this?</p>
-        <div style={{fontSize:"3rem",letterSpacing:"0.08em",lineHeight:1.8}}>{song.emojis}</div>
+        <div style={{fontSize:"clamp(1.8rem, 10vw, 3rem)",letterSpacing:"0.08em",lineHeight:1.8,wordBreak:"break-word"}}>{song.emojis}</div>
         {showHint && <p style={{marginTop:10,color:NEON.gold,fontFamily:"'Courier New',monospace",fontSize:"0.78rem",lineHeight:1.5}}>💡 {song.hint}</p>}
       </Card>
       {revealed===null ? (
@@ -569,6 +569,10 @@ export default function App() {
           <p style={{color:"#aaa",fontFamily:"'Courier New',monospace",marginTop:12,marginBottom:8,fontSize:"0.85rem"}}>{lvl.desc}</p>
           <p style={{color:"#555",fontFamily:"'Courier New',monospace",fontSize:"0.75rem",marginBottom:28}}>🔀 10 songs picked randomly from the pool</p>
           <NeonBtn onClick={startLevel} color={lvl.color} style={{fontSize:"1rem",padding:"13px 32px"}}>Let's Go! ⚡</NeonBtn>
+          <button onClick={()=>setScreen("intro")} style={{marginTop:18,background:"none",border:"none",color:"#666",
+            fontFamily:"'Courier New',monospace",cursor:"pointer",textDecoration:"underline",fontSize:"0.82rem"}}>
+            ← Back
+          </button>
         </div>
       )}
 
