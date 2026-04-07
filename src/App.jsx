@@ -280,12 +280,7 @@ function QuestionScreen({ color, glow, totalQ, qIdx, song, onAnswer, label }) {
   const norm = s => s.toLowerCase().replace(/[^a-z0-9\s]/g,"").replace(/\s+/g," ").trim();
   const check = () => {
     if (!input.trim()) return;
-    const u = norm(input), c = norm(song.title);
-    if (u === c) { setRevealed(true); return; }
-    const keyWords = c.split(" ").filter(w => w.length >= 5);
-    if (keyWords.length === 0) { setRevealed(false); return; }
-    const inputSet = new Set(u.split(" "));
-    setRevealed(keyWords.every(w => inputSet.has(w)));
+    setRevealed(norm(input) === norm(song.title));
   };
 
   return (
