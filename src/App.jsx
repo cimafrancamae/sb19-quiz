@@ -408,14 +408,24 @@ function EndScreen({ totalScore, onReplay, onSoloMode, onFeedback }) {
           </a>
         ))}
       </Card>
-      <Card style={{maxWidth:380,width:"100%",marginBottom:12,textAlign:"center"}} glow={`0 0 16px ${NEON.gold}44`}>
-        <p style={{color:NEON.gold,fontFamily:"'Courier New',monospace",fontWeight:700,marginBottom:6}}>☕ Buy Me a Coffee</p>
-        <p style={{color:"#aaa",fontFamily:"'Courier New',monospace",fontSize:"0.78rem",marginBottom:12}}>Loved this quiz? Help keep more A'TIN content coming!</p>
-        <a href="https://www.buymeacoffee.com/maeci" target="_blank" rel="noreferrer"
-          style={{display:"inline-block",background:NEON.gold,color:"#000",padding:"9px 24px",
-            borderRadius:8,fontFamily:"'Courier New',monospace",fontWeight:700,textDecoration:"none",fontSize:"0.88rem"}}>
-          ☕ Buy me a coffee
+      <Card style={{maxWidth:420,width:"100%",marginBottom:12,textAlign:"center"}} glow={`0 0 16px ${NEON.gold}44`}>
+        <p style={{color:NEON.gold,fontFamily:"'Courier New',monospace",fontWeight:700,marginBottom:4}}>💛 Support this quiz</p>
+        <p style={{color:"#aaa",fontFamily:"'Courier New',monospace",fontSize:"0.78rem",marginBottom:14}}>Loved this quiz? Help keep more A'TIN content coming!</p>
+        <a href="https://ko-fi.com/itsmaeci" target="_blank" rel="noreferrer"
+          style={{display:"inline-flex",alignItems:"center",gap:8,background:"#FF5E5B",color:"#fff",padding:"9px 24px",
+            borderRadius:8,fontFamily:"'Courier New',monospace",fontWeight:700,textDecoration:"none",fontSize:"0.88rem",marginBottom:16}}>
+          ☕ Support on Ko-fi
         </a>
+        <div style={{display:"flex",gap:16,justifyContent:"center",flexWrap:"wrap"}}>
+          <div style={{textAlign:"center"}}>
+            <p style={{color:NEON.cyan,fontFamily:"'Courier New',monospace",fontSize:"0.75rem",fontWeight:700,marginBottom:6}}>GCash</p>
+            <img src="/gcash-qr.jpg" alt="GCash QR code" style={{width:140,height:140,borderRadius:8,border:`2px solid ${NEON.cyan}66`,display:"block"}} />
+          </div>
+          <div style={{textAlign:"center"}}>
+            <p style={{color:NEON.pink,fontFamily:"'Courier New',monospace",fontSize:"0.75rem",fontWeight:700,marginBottom:6}}>BPI</p>
+            <img src="/bpi-qr.jpg" alt="BPI QR code" style={{width:140,height:140,borderRadius:8,border:`2px solid ${NEON.pink}66`,display:"block"}} />
+          </div>
+        </div>
       </Card>
       <div style={{display:"flex",gap:10,flexWrap:"wrap",justifyContent:"center",marginBottom:8}}>
         <NeonBtn onClick={onReplay} color={NEON.cyan}>🔄 Play Again</NeonBtn>
