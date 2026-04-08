@@ -141,6 +141,7 @@ const MEMBERS = [
 ];
 
 const PASS_SCORE = 60;
+const SOLO_Q = 10;
 
 // ── SHUFFLE UTILITY ──────────────────────────────────────────────────────────
 function shuffle(arr) {
@@ -523,7 +524,7 @@ function SoloLobby({ onSelect, onBack }) {
             <span style={{fontSize:"1.6rem"}}>{m.emoji}</span>
             <div style={{textAlign:"left"}}>
               <div style={{color:m.color,fontFamily:"'Courier New',monospace",fontWeight:700,fontSize:"0.95rem"}}>{m.name}</div>
-              <div style={{color:"#888",fontFamily:"'Courier New',monospace",fontSize:"0.72rem"}}>{m.role} · {m.songs.length} solo song{m.songs.length!==1?"s":""}</div>
+              <div style={{color:"#888",fontFamily:"'Courier New',monospace",fontSize:"0.72rem"}}>{m.role} · {m.songs.length} songs{m.songs.length>SOLO_Q?` · ${SOLO_Q} per session`:""}</div>
             </div>
             <span style={{marginLeft:"auto",color:m.color,fontFamily:"'Courier New',monospace"}}>→</span>
           </button>
@@ -581,7 +582,7 @@ export default function App() {
   const handleSoloAnswer = correct => {
     const ns = soloScore + (correct?1:0);
     setSoloScore(ns);
-    if (soloQ < member.songs.length-1) { setSoloQ(q=>q+1); setSoloScore(ns); }
+    if (soloQ < soloSongs.length-1) { setSoloQ(q=>q+1); setSoloScore(ns); }
     else { setSoloScore(ns); setScreen("soloResult"); }
   };
 
@@ -665,25 +666,25 @@ export default function App() {
       )}
 
       {screen==="soloLobby" && (
-        <SoloLobby onSelect={m=>{setMember(m);setSoloQ(0);setSoloScore(0);setSoloSongs(shuffle([...m.songs]));setScreen("soloQuiz");}}
+        <SoloLobby onSelect={m=>{setMember(m);setSoloQ(0);setSoloScore(0);setSoloSongs(pickN(m.songs, SOLO_Q));setScreen("soloQuiz");}}
           onBack={()=>setScreen("intro")} />
       )}
 
       {screen==="soloQuiz" && member && soloSongs.length>0 && (
         <QuestionScreen key={soloQ} color={member.color} glow={`0 0 22px ${member.color}88`}
-          totalQ={member.songs.length} qIdx={soloQ} song={soloSongs[soloQ]}
+          totalQ={soloSongs.length} qIdx={soloQ} song={soloSongs[soloQ]}
           onAnswer={handleSoloAnswer} label={`${member.emoji} ${member.name} Solo`} />
       )}
 
       {screen==="soloResult" && member && (
-        <Results score={soloScore} total={member.songs.length} color={member.color}
-          passed={Math.round((soloScore/member.songs.length)*100)>=PASS_SCORE}
-          passMsg={`${soloScore===member.songs.length?"💯 Perfect!":"Nice!"} You really know ${member.name}'s solo work!`}
+        <Results score={soloScore} total={soloSongs.length} color={member.color}
+          passed={Math.round((soloScore/soloSongs.length)*100)>=PASS_SCORE}
+          passMsg={`${soloScore===soloSongs.length?"💯 Perfect!":"Nice!"} You really know ${member.name}'s solo work!`}
           failMsg={`Time to stream ${member.name}'s solo stuff! 🎵`}
           buttons={<>
-            <NeonBtn onClick={()=>{setSoloQ(0);setSoloScore(0);setSoloSongs(shuffle([...member.songs]));setScreen("soloQuiz");}} color={member.color}>↩ Retry</NeonBtn>
+            <NeonBtn onClick={()=>{setSoloQ(0);setSoloScore(0);setSoloSongs(pickN(member.songs, SOLO_Q));setScreen("soloQuiz");}} color={member.color}>↩ Retry</NeonBtn>
             <NeonBtn onClick={()=>setScreen("soloLobby")} color="#aaa">← Members</NeonBtn>
-            <ShareBtn text={`I scored ${Math.round((soloScore/member.songs.length)*100)}% on ${member.name}'s solo quiz on the SB19 Emoji Quiz! 💜`} color={member.color} />
+            <ShareBtn text={`I scored ${Math.round((soloScore/soloSongs.length)*100)}% on ${member.name}'s solo quiz on the SB19 Emoji Quiz! 💜`} color={member.color} />
             <NeonBtn onClick={()=>setShowFeedback(true)} color={NEON.purple}>💬 Feedback</NeonBtn>
           </>}
         />
