@@ -212,9 +212,8 @@ function ShareBtn({ text, color=NEON.cyan, style={} }) {
 }
 
 // ── STREAM LINKS ─────────────────────────────────────────────────────────────
-const PLACEHOLDER_YT = [];
 function StreamLinks({ song, color }) {
-  const isReal = song.yt && !PLACEHOLDER_YT.includes(song.yt);
+  const isReal = !!song.yt;
   return (
     <div style={{display:"flex",gap:8,justifyContent:"center",flexWrap:"wrap",marginTop:10}}>
       {isReal && (
@@ -462,23 +461,6 @@ function EndScreen({ totalScore, onReplay, onSoloMode, onFeedback }) {
         </p>
         <NeonBtn onClick={onSoloMode} color={NEON.purple} style={{width:"100%"}}>🎤 Solo Mode</NeonBtn>
       </Card>
-      {/* <Card style={{maxWidth:380,width:"100%",marginBottom:12,textAlign:"left"}} glow={`0 0 16px ${NEON.pink}55`}>
-        <p style={{color:NEON.pink,fontFamily:"'Courier New',monospace",fontWeight:700,marginBottom:12,textAlign:"center"}}>💜 Follow & share!</p>
-        {[
-          {icon:"🐦",label:"Twitter / X",handle:"@itsmaeci",url:"https://twitter.com/itsmaeci"},
-          {icon:"📸",label:"Instagram",handle:"@itsmaeci",url:"https://instagram.com/itsmaeci"},
-          {icon:"🎵",label:"TikTok",handle:"@itsmaeci",url:"https://tiktok.com/@itsmaeci"},
-          {icon:"ⓕ",label:"Facebook",handle:"@itsmaeci",url:"https://facebook.com/itsmaeci"},
-        ].map(s=>(
-          <a key={s.label} href={s.url} target="_blank" rel="noreferrer"
-            style={{display:"flex",alignItems:"center",gap:10,padding:"7px 10px",borderRadius:8,
-              background:"#ffffff08",marginBottom:6,textDecoration:"none",border:"1px solid #ffffff11"}}>
-            <span>{s.icon}</span>
-            <span style={{flex:1,fontFamily:"'Courier New',monospace",color:"#ccc",fontSize:"0.8rem"}}>{s.label}</span>
-            <span style={{fontFamily:"'Courier New',monospace",color:NEON.pink,fontSize:"0.76rem"}}>{s.handle}</span>
-          </a>
-        ))}
-      </Card> */}
       <Card style={{maxWidth:420,width:"100%",marginBottom:12,textAlign:"center"}} glow={`0 0 16px ${NEON.gold}44`}>
         <p style={{color:NEON.gold,fontFamily:"'Courier New',monospace",fontWeight:700,marginBottom:4}}>💛 Support this quiz</p>
         <p style={{color:"#aaa",fontFamily:"'Courier New',monospace",fontSize:"0.78rem",marginBottom:14}}>Loved this quiz? Help keep more A'TIN content coming!</p>
@@ -582,8 +564,8 @@ export default function App() {
   const handleSoloAnswer = correct => {
     const ns = soloScore + (correct?1:0);
     setSoloScore(ns);
-    if (soloQ < soloSongs.length-1) { setSoloQ(q=>q+1); setSoloScore(ns); }
-    else { setSoloScore(ns); setScreen("soloResult"); }
+    if (soloQ < soloSongs.length-1) setSoloQ(q=>q+1);
+    else setScreen("soloResult");
   };
 
   const currentSong = sessionSongs[lvlIdx+1]?.[qIdx];
