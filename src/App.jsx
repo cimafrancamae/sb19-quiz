@@ -336,7 +336,7 @@ const LEVEL_META = [
 ];
 
 // ── QUESTION SCREEN ───────────────────────────────────────────────────────────
-function QuestionScreen({ color, glow, totalQ, qIdx, song, onAnswer, label }) {
+function QuestionScreen({ color, glow, totalQ, qIdx, song, onAnswer, label, artist="SB19" }) {
   const [input, setInput] = useState("");
   const [showHint, setShowHint] = useState(false);
   const [revealed, setRevealed] = useState(null);
@@ -360,7 +360,7 @@ function QuestionScreen({ color, glow, totalQ, qIdx, song, onAnswer, label }) {
         ))}
       </div>
       <Card glow={glow} style={{textAlign:"center",marginBottom:16}}>
-        <p style={{color:"#aaa",fontFamily:"'Courier New',monospace",fontSize:"0.78rem",marginBottom:8}}>🎵 What SB19 song is this?</p>
+        <p style={{color:"#aaa",fontFamily:"'Courier New',monospace",fontSize:"0.78rem",marginBottom:8}}>🎵 What {artist} song is this?</p>
         <div style={{fontSize:"clamp(1.8rem, 10vw, 3rem)",letterSpacing:"0.08em",lineHeight:1.8,wordBreak:"break-word"}}>{song.emojis}</div>
         {showHint && <p style={{marginTop:10,color:NEON.gold,fontFamily:"'Courier New',monospace",fontSize:"0.78rem",lineHeight:1.5}}>💡 {song.hint}</p>}
       </Card>
@@ -655,7 +655,7 @@ export default function App() {
       {screen==="soloQuiz" && member && soloSongs.length>0 && (
         <QuestionScreen key={soloQ} color={member.color} glow={`0 0 22px ${member.color}88`}
           totalQ={soloSongs.length} qIdx={soloQ} song={soloSongs[soloQ]}
-          onAnswer={handleSoloAnswer} label={`${member.emoji} ${member.name} Solo`} />
+          onAnswer={handleSoloAnswer} label={`${member.emoji} ${member.name} Solo`} artist={member.name} />
       )}
 
       {screen==="soloResult" && member && (
